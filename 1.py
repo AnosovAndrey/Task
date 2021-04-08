@@ -2,23 +2,32 @@
 
 import math
 import csv
+import random
 
 # Массу от 0 до 4. Длину по х,у до 10, по z до 5
 
-def calc(x, y):
-    x1 = 2
-    y1 = 2
-    z1 = -2
-    x2 = 3
-    y2 = 3
-    z2 = -3
+def calc(x1, x2, y1, y2, z1, z2, weight, x, y):
     z = 0
-    weight = 1
-    G = 398600.448
+    G = 6.67191
     r1 = math.sqrt((x1-x)*(x1-x) + (y1-y)*(y1-y) + (z1-z)*(z1-z))
     r2 = math.sqrt((x2-x)*(x2-x) + (y2-y)*(y2-y) + (z2-z)*(z2-z))
     r1r2 = (x1-x)*(x2-x) + (y1-y)*(y2-y) + (z1-z)*(z2-z)
     return ((z1-z)/r1 + (z2-z)/r2)*(G*weight/(r1*r2+r1r2))
+
+
+weight = random.uniform(0, 4)
+
+x1 = random.uniform(0, 40)
+temp = random.uniform(1, 10)
+x2 = (x1 + temp) if ((x1 + temp) < 40) else (x1 - temp)
+
+y1 = random.uniform(0, 40)
+temp = random.uniform(1, 10)
+y2 = (y1 + temp) if ((y1 + temp) < 40) else (y1 - temp)
+
+z1 = -random.uniform(0, 5)
+z2 = z1 - random.uniform(1, 5)
+
 
 dimension = 40
 step = 1
@@ -29,7 +38,7 @@ with open("data.csv", mode="w", encoding='utf-8') as w_file:
     file_writer.writerow(["x", "y", "component"])
     for x in range(0, h):
       for y in range(0, h):
-        print(x*step, y*step, calc(x*step, y*step))
-        file_writer.writerow([x*step, y*step, calc(x*step, y*step)])
+        print(x*step, y*step, calc(x1, x2, y1, y2, z1, z2, weight, x*step, y*step))
+        file_writer.writerow([x*step, y*step, calc(x1, x2, y1, y2, z1, z2, weight, x*step, y*step)])
 
 
