@@ -28,17 +28,24 @@ y2 = (y1 + temp) if ((y1 + temp) < 40) else (y1 - temp)
 z1 = -random.uniform(0, 5)
 z2 = z1 - random.uniform(1, 5)
 
+with open("otrezok.csv", mode="a", encoding='utf-8') as w_file:
+    file_writer = csv.writer(w_file, delimiter = ",", lineterminator="\r")
+    file_writer.writerow(["x1", "x2", "y1", "y2", "z1", "z2", "weight"])
+    file_writer.writerow([x1, x2, y1, y2, z1, z2, weight])
+
 
 dimension = 40
 step = 1
 h=round(dimension/step)
 
-with open("data.csv", mode="w", encoding='utf-8') as w_file:
+with open("data.csv", mode="a", encoding='utf-8') as w_file:
     file_writer = csv.writer(w_file, delimiter = ",", lineterminator="\r")
     file_writer.writerow(["x", "y", "component"])
     for x in range(0, h):
       for y in range(0, h):
-        print(x*step, y*step, calc(x1, x2, y1, y2, z1, z2, weight, x*step, y*step))
+        #print(x*step, y*step, calc(x1, x2, y1, y2, z1, z2, weight, x*step, y*step))
         file_writer.writerow([x*step, y*step, calc(x1, x2, y1, y2, z1, z2, weight, x*step, y*step)])
+
+print("done")
 
 
